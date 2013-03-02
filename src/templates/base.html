@@ -59,7 +59,7 @@
               </ul>
             {% endif %}
             <ul class="nav">
-              <li class="active"><a href="#">{% trans "Home" %}</a></li>
+              <li><a href="/">{% trans "Home" %}</a></li>
               <li><a href="#about">{% trans "About" %}</a></li>
               <li><a href="{% url myapp_contact %}">{% trans "Contact" %}</a></li>
             </ul>
@@ -74,8 +74,8 @@
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
               <li class="nav-header">Sidebar</li>
-              <li class="active"><a href="/">{% trans "Home" %}</a></li>
-              <li><a href="#">Link</a></li>
+              <li><a href="/">{% trans "Home" %}</a></li>
+              <li><a href="{% url myapp_contact %}">{% trans "Contact" %}</a></li>
               <li><a href="#">Link</a></li>
               <li><a href="#">Link</a></li>
               <li class="nav-header">Sidebar</li>
@@ -112,6 +112,7 @@
     <script src="{{STATIC_URL}}vendor/js/jquery.js"></script>
     <script src="{{STATIC_URL}}vendor/js/bootstrap.min.js"></script>
     <script src="{{STATIC_URL}}vendor/js/uni-form.jquery.js"></script>
+    <script src="{{STATIC_URL}}js/app.js"></script>
 
   </body>
 </html>

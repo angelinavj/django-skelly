@@ -7,12 +7,11 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$', 'myapp.views.index'),
-
-    url(r'^admin/', include(admin.site.urls)),
-
+    url(r'', include('myapp.urls')),
     url(r'', include('social_auth.urls')),
-    url(r'^accounts/', include('registration.backends.default.urls')),
+    url(r'^payments/', include('getpaid.urls')),
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^accounts/', include('registration.backends.simple.urls')),
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 )
 

@@ -5,6 +5,7 @@ import sys
 
 ROOT_PATH = os.path.dirname(__file__)
 sys.path.insert(0, os.path.join(ROOT_PATH, 'apps'))
+sys.path.insert(0, os.path.join(ROOT_PATH, 'django-getpaid'))
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -127,12 +128,17 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # 'django.contrib.admindocs',
 
+    'getpaid',
+    'getpaid.backends.dummy',
+    'getpaid.backends.dotpay',
     'crispy_forms',
     # https://github.com/omab/django-social-auth
     'social_auth',
     # https://bitbucket.org/ubernostrum/django-registration
     'registration',
     'myapp',
+
+    'south',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -158,6 +164,8 @@ LOGGING = {
     }
 }
 
+AUTH_PROFILE_MODULE = 'registration.RegistrationProfile'
+
 AUTHENTICATION_BACKENDS = (
     'social_auth.backends.facebook.FacebookBackend',
     'django.contrib.auth.backends.ModelBackend',
@@ -172,10 +180,17 @@ LOGIN_ERROR_URL    = '/login-error/'
 
 SOCIAL_AUTH_SESSION_EXPIRATION = False
 
-ACCOUNT_ACTIVATION_DAYS = 7
+ACCOUNT_ACTIVATION_DAYS = 0
 
 CRISPY_TEMPLATE_PACK = 'bootstrap'
 
+GETPAID_BACKENDS = ('getpaid.backends.dummy', )
+GETPAID_BACKENDS_SETTINGS = {
+    # 'getpaid.backends.dotpay' : {
+    #         'id' : 123456,
+
+    #     },
+}
 try:
     from local_settings import *
 except ImportError:

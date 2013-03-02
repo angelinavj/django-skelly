@@ -1,4 +1,5 @@
 from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
 from django.template.response import TemplateResponse
 from myapp.forms import ContactForm, PaymentMethodForm
 from myapp.models import Order
@@ -18,6 +19,15 @@ class OrderView(DetailView):
         context = super(OrderView, self).get_context_data(**kwargs)
         context['payment_form'] = PaymentMethodForm(self.object)
         return context
+
+class OrderListView(ListView):
+    model = Order
+    template_name = 'myapp/payment_list.html'
+    
+    def get_queryset(self):
+        queryset = super(OrderListView, self).get_queryset()
+        return queryset.filter(user=self.request.user)
+
 
 def index(request):
     return TemplateResponse(request, 'index.html')

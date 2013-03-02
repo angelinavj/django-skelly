@@ -22,5 +22,11 @@ msgstr ""
 msgid "Payment history"
 msgstr "Historia płatności"
 
+msgid "Payment list"
+msgstr "Lista płatności"
+
 msgid "Payment has been completed"
 msgstr "Płatnośc została sfinalizowana"
+
+msgid "Waiting for payment"
+msgstr "Czeka na sfinalizowanie"

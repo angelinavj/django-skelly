@@ -43,7 +43,7 @@
                   <li><a href="{% url auth_profile %}">{{ user.get_profile }}</a></li>
                   <li><a href="/accounts/logout">{% trans "Logout" %}</a></li>
               </ul>
-              <p class="navbar-text pull-right">
+              <p class="navbar-text pull-right logged-as">
                 {% trans "Logged in as" %}
               </p>
             {% else %}

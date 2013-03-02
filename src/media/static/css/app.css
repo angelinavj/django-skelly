@@ -19,3 +19,7 @@ body {
 form .controls > ul {
     list-style: none;
 }
+
+.logged-as {
+  margin-right: 10px;
+}

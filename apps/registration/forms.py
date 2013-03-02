@@ -6,6 +6,8 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field
 from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions
 from django.utils.translation import ugettext_lazy as _
+from registration.models import RegistrationProfile
+from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm as LoginForm, \
                                     PasswordResetForm as ResetForm, \
                                     SetPasswordForm as SetPassForm, \
@@ -74,14 +76,25 @@ class AuthenticationForm(LoginForm):
         Field('username', css_class='input-xlarge'),
         Field('password', rows="3", css_class='input-xlarge'),
         FormActions(
-            Submit('submit', 'Login', css_class="btn-primary"),
+            Submit('submit', _('Login'), css_class="btn-primary"),
             Submit('cancel', _('Cancel')),
         ),
     )
 
-    
+class RegistrationFormUniqueEmail(object):
+    """ Subclass of ``RegistrationForm`` which enforces uniqueness of email addresses. """
+    def clean_email(self):
+        """ site. """
+        email = self.cleaned_data['email']
+
+        if User.objects.filter(email__iexact=email):
+            error_msg = _("This email address is already in use. Please supply a different email address.")
+            raise forms.ValidationError(error_msg)
+
+        return email
+
 class RegistrationForm(forms.Form):
-    username = forms.RegexField(regex=r'^[\w.@+-]+$', max_length=30, required=True)
+    username = forms.RegexField(label=_("Username"), regex=r'^[\w.@+-]+$', max_length=30, required=True)
     email = forms.EmailField(max_length=75, label=_("E-mail"), required=True)
     password1 = forms.CharField(label=_("Password"), widget=forms.PasswordInput, required=True)
     password2 = forms.CharField(label=_("Password (again)"), widget=forms.PasswordInput, required=True)
@@ -114,75 +127,32 @@ class RegistrationFormTermsOfService(RegistrationForm):
 
     helper = _registration_form_helper(Field('tos', rows="3"))
 
-class RegistrationFormUniqueEmail(RegistrationForm):
-    """ Subclass of ``RegistrationForm`` which enforces uniqueness of email addresses. """
-    def clean_email(self):
-        """ site. """
-        email = self.cleaned_data['email']
-
-        if User.objects.filter(email__iexact=email):
-            error_msg = _("This email address is already in use. Please supply a different email address.")
-            raise forms.ValidationError(error_msg)
-
-        return email
-
 class RegistrationRestrictForm(RegistrationFormTermsOfService, RegistrationFormUniqueEmail):
     pass
 
-# class MessageForm(forms.Form):
-#     text_input = forms.CharField()
 
-#     textarea = forms.CharField(
-#         widget = forms.Textarea(),
-#     )
+class UserForm(forms.ModelForm, RegistrationFormUniqueEmail):
+    username = forms.RegexField(label=_("Username"), regex=r'^[\w.@+-]+$', max_length=30, required=True)
+    email = forms.EmailField(max_length=75, label=_("E-mail"), required=True)
+    
+    class Meta:
+        model = User
 
-#     radio_buttons = forms.ChoiceField(
-#         choices = (
-#             ('option_one', "Option one is this and that be sure to include why it's great"), 
-#             ('option_two', "Option two can is something else and selecting it will deselect option one")
-#         ),
-#         widget = forms.RadioSelect,
-#         initial = 'option_two',
-#     )
+class ProfileForm(forms.ModelForm):
+    first_name = forms.CharField(label=_("First name"), max_length=30, required=True)
+    last_name = forms.CharField(label=_("Last name"), max_length=30, required=True)
 
-#     checkboxes = forms.MultipleChoiceField(
-#         choices = (
-#             ('option_one', "Option one is this and that be sure to include why it's great"), 
-#             ('option_two', 'Option two can also be checked and included in form results'),
-#             ('option_three', 'Option three can yes, you guessed it also be checked and included in form results')
-#         ),
-#         initial = 'option_one',
-#         widget = forms.CheckboxSelectMultiple,
-#         help_text = "<strong>Note:</strong> Labels surround all the options for much larger click areas and a more usable form.",
-#     )
+    helper = FormHelper()
+    helper.form_class = 'form-horizontal'
+    helper.layout = Layout(
+        Field('first_name', rows="3", css_class='input-xlarge'),
+        Field('last_name', rows="3", css_class='input-xlarge'),
+        FormActions(
+            Submit('submit', _('Save'), css_class="btn-primary"),
+            Submit('cancel', _('Cancel')),
+        ),
+    )
 
-#     appended_text = forms.CharField(
-#         help_text = "Here's more help text"
-#     )
-
-#     prepended_text = forms.CharField()
-
-#     prepended_text_two = forms.CharField()
-
-#     multicolon_select = forms.MultipleChoiceField(
-#         choices = (('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')),
-#     )
-
-#     # Uni-form
-#     helper = FormHelper()
-#     helper.form_class = 'form-horizontal'
-#     helper.layout = Layout(
-#         Field('text_input', css_class='input-xlarge'),
-#         Field('textarea', rows="3", css_class='input-xlarge'),
-#         'radio_buttons',
-#         Field('checkboxes', style="background: #FAFAFA; padding: 10px;"),
-#         AppendedText('appended_text', '.00'),
-#         PrependedText('prepended_text', '<input type="checkbox" checked="checked" value="" id="" name="">', active=True),
-#         PrependedText('prepended_text_two', '@'),
-#         'multicolon_select',
-#         FormActions(
-#             Submit('save_changes', 'Save changes', css_class="btn-primary"),
-#             Submit('cancel', 'Cancel'),
-#         )
-#     )
-
+    class Meta:
+        model = RegistrationProfile
+        fields = ('first_name', 'last_name')

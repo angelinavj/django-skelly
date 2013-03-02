@@ -175,3 +175,8 @@ SOCIAL_AUTH_SESSION_EXPIRATION = False
 ACCOUNT_ACTIVATION_DAYS = 7
 
 CRISPY_TEMPLATE_PACK = 'bootstrap'
+
+try:
+    from local_settings import *
+except ImportError:
+    pass

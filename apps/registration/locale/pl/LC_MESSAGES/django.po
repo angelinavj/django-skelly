@@ -71,6 +71,12 @@ msgstr ""
 msgid "user"
 msgstr "użytkownik"
 
+msgid "First name"
+msgstr "Imię"
+
+msgid "Last name"
+msgstr "Nazwisko"
+
 #: models.py:189
 msgid "activation key"
 msgstr "klucz aktywacyjny"
@@ -82,3 +88,50 @@ msgstr "profil rejestracji"
 #: models.py:195
 msgid "registration profiles"
 msgstr "profile rejestracji"
+
+msgid "Logged in as"
+msgstr "Zalogowany jako"
+
+msgid "Register"
+msgstr "Zarejestruj się"
+
+msgid "Enter using Facebook"
+msgstr "Zaloguj przez Facebook"
+
+msgid "Contact"
+msgstr "Kontakt"
+
+msgid "Logout"
+msgstr "Wyloguj się"
+
+msgid "About"
+msgstr "O nas"
+
+msgid "Payment"
+msgstr "Płatność"
+
+msgid "Payments"
+msgstr "Płatności"
+
+msgid "Pay"
+msgstr "Zapłać"
+
+msgid "Cancel"
+msgstr "Anuluj"
+
+msgid "Subject"
+msgstr "Temat"
+
+msgid "Email"
+msgstr "Adres E-mail"
+
+msgid "Send"
+msgstr "Wyślij"
+
+msgid "Message"
+msgstr "Wiadomość"
+
+msgid "To contact us use form below."
+msgstr "Aby się z nami skontaktować skorzystaj z formularza poniżej."
+
+

@@ -25,8 +25,10 @@ consult a specific backend's documentation for details.
 from django.conf.urls.defaults import *
 from django.contrib.auth import views as auth_views
 from registration.forms import AuthenticationForm, PasswordResetForm, PasswordChangeForm, SetPasswordForm
+from registration.views import profile
 
 urlpatterns = patterns('',
+ url(r'^profile/$', profile, name='auth_profile'),
  url(r'^login/$', auth_views.login, 
   {'template_name': 'registration/login.html', 'authentication_form': AuthenticationForm},
   name='auth_login'),

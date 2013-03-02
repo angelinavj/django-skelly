@@ -43,9 +43,7 @@
                   <li><a href="{% url auth_profile %}">{{ user.get_profile }}</a></li>
                   <li><a href="/accounts/logout">{% trans "Logout" %}</a></li>
               </ul>
-              <p class="navbar-text pull-right">
-                {% trans "Logged in as" %}
-              </p>
+              <p class="navbar-text pull-right">{% trans "Logged in as" %}</p>
             {% else %}
               <form class="navbar-form pull-right" action="/accounts/login/" method="post">
                 <input class="span2" placeholder="{% trans "Username" %}" name="username" type="text">

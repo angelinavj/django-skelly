@@ -1,0 +1,22 @@
+{% extends "registration/registration_base.html" %}
+{% load i18n %}
+
+{% block title %}
+    {% if account %}
+        {% trans "Activation complete" %}
+    {% else %}
+        {% trans "Activation problem" %}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {% crispy form %}
+    <div class="row-fluid">
+        {% if account %}
+            {% trans "Thanks" %} {{ account }}, {% trans "activation complete" %}!
+            {% trans "You may now login using the username and password you set at registration" %}. <a href="{% url auth_login %}">{% trans "Enjoy!" %}</a>.
+        {% else %}
+            {% trans "Oops &ndash; it seems that your activation key is invalid.  Please check the url again." %}
+        {% endif %}
+    </div>
+{% endblock %}

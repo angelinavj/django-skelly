@@ -1,0 +1,11 @@
+{% extends "registration/registration_base.html" %}
+{% load crispy_forms_tags %}{% load i18n %}
+
+{% block title %}{% trans "Login" %}{% endblock %}
+
+{% block content %}
+    {% crispy form %}
+    <div class="row-fluid">
+        <p>{% trans "Forgot your password ?" %} <a href="{% url auth_password_reset %}">{% trans "Reset it." %}</a></p>
+    </div>
+{% endblock %}

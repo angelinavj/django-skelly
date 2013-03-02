@@ -1,8 +1,10 @@
 # -*- encoding: utf-8 -*-
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
 import os
 import sys
 
 ROOT_PATH = os.path.dirname(__file__)
+sys.path.insert(0, os.path.join(ROOT_PATH, 'apps'))
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -49,7 +51,7 @@ USE_L10N = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = os.path.join(ROOT_PATH, 'media')
+MEDIA_ROOT = os.path.join(ROOT_PATH, 'src', 'media')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -60,7 +62,7 @@ MEDIA_URL = '/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = os.path.join(MEDIA_ROOT, 'static')
+STATIC_ROOT = ''
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -73,9 +75,7 @@ ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    # Put strings here, like "/home/html/static" or "C:/www/django/static".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
+    os.path.join(MEDIA_ROOT, 'static'),
 )
 
 # List of finder classes that know how to find static files in
@@ -104,15 +104,17 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-TEMPLATE_CONTEXT_PROCESSORS = (
+TEMPLATE_CONTEXT_PROCESSORS += (
+    'django.core.context_processors.request',
     'django.contrib.auth.context_processors.auth',
-    'social_auth.context_processors.social_auth_by_name_backends',
+    'social_auth.context_processors.social_auth_by_name_backends'
 )
 
-ROOT_URLCONF = 'mrmusic.urls'
+ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
-    os.path.join(ROOT_PATH, 'templates'),
+    os.path.join(ROOT_PATH, 'src', 'templates'),
+    os.path.join(ROOT_PATH, 'apps', 'crispy_forms', 'templates'),
 )
 
 INSTALLED_APPS = (
@@ -123,13 +125,14 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 
+    'crispy_forms',
     # https://github.com/omab/django-social-auth
     'social_auth',
     # https://bitbucket.org/ubernostrum/django-registration
     'registration',
+    'myapp',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -170,3 +173,5 @@ LOGIN_ERROR_URL    = '/login-error/'
 SOCIAL_AUTH_SESSION_EXPIRATION = False
 
 ACCOUNT_ACTIVATION_DAYS = 7
+
+CRISPY_TEMPLATE_PACK = 'bootstrap'

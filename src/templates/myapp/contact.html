@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}{% load i18n %}
+
+{% block title %}{% trans "Contact" %}{% endblock %}
+
+{% block content %}
+    <div class="row-fluid">
+      <p>{% trans "To contact us use form below." %}</p>
+    </div>
+    {% crispy form %}
+{% endblock %}

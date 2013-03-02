@@ -15,3 +15,7 @@ body {
     padding-right: 5px;
   }
 }
+
+form .controls > ul {
+    list-style: none;
+}

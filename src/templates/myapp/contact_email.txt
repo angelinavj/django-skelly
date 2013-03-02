@@ -1,0 +1,3 @@
+Contact email from myapp, sent by {{ email }}
+
+{{ message }}

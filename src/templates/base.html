@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -35,31 +36,32 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="brand" href="#">Project name</a>
+          <a class="brand" href="#">{% trans "Project name" %}</a>
           <div class="nav-collapse collapse">
             {% if user.is_authenticated %}
               <ul class="nav pull-right">
-                  <li><a href="#">{{ user }}</a></li>
-                  <li><a href="/accounts/logout">Logout</a></li>
+                  <li><a href="{% url auth_profile %}">{{ user.get_profile }}</a></li>
+                  <li><a href="/accounts/logout">{% trans "Logout" %}</a></li>
               </ul>
               <p class="navbar-text pull-right">
-                Logged in as 
+                {% trans "Logged in as" %}
               </p>
             {% else %}
-              <form class="navbar-form pull-right" action="/accounts/login/" method="post">{% csrf_token %}
-                <input class="span2" placeholder="Username" name="username" type="text">
-                <input class="span2" placeholder="Password" name="password" type="password">
-                <button type="submit" class="btn">Sign in</button>
+              <form class="navbar-form pull-right" action="/accounts/login/" method="post">
+                <input class="span2" placeholder="{% trans "Username" %}" name="username" type="text">
+                <input class="span2" placeholder="{% trans "Password" %}" name="password" type="password">
+                <button type="submit" class="btn">{% trans "Sign in" %}</button>
+                {% csrf_token %}
               </form>
               <ul class="nav pull-right">
-                  <li><a href="/accounts/register">Register</a></li>
-                  <li><a href="{% url socialauth_begin 'facebook' %}">Enter using Facebook</a></li>
+                  <li><a href="/accounts/register">{% trans "Register" %}</a></li>
+                  <li><a href="{% url socialauth_begin 'facebook' %}">{% trans "Enter using Facebook" %}</a></li>
               </ul>
             {% endif %}
             <ul class="nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
+              <li class="active"><a href="#">{% trans "Home" %}</a></li>
+              <li><a href="#about">{% trans "About" %}</a></li>
+              <li><a href="{% url myapp_contact %}">{% trans "Contact" %}</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -72,7 +74,7 @@
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
               <li class="nav-header">Sidebar</li>
-              <li class="active"><a href="#">Link</a></li>
+              <li class="active"><a href="/">{% trans "Home" %}</a></li>
               <li><a href="#">Link</a></li>
               <li><a href="#">Link</a></li>
               <li><a href="#">Link</a></li>

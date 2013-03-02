@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}{% load i18n %}
+
+{% block title %}{% trans "Payment" %}{% endblock %}
+
+{% block content %}
+    <div class="row-fluid">
+        {% if object.status == 'P' %}
+            <p>{% trans "Payment has been completed" %}.</p>
+        {% else %}
+            {% crispy payment_form %}
+        {% endif %}
+    </div>
+{% endblock %}

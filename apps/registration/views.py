@@ -2,14 +2,32 @@
 Views which allow users to create and activate accounts.
 
 """
-
-
-from django.shortcuts import redirect
-from django.shortcuts import render_to_response
+from django.template.response import TemplateResponse
+from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template import RequestContext
 
 from registration.backends import get_backend
+from registration.forms import ProfileForm
+from django.db import transaction
+from django.http import Http404
 
+@transaction.commit_on_success
+def profile(request, profile_form=ProfileForm,
+            template_name='registration/profile.html'):
+    try:
+        user_profile = request.user.get_profile()
+    except:
+        raise Http404()
+
+    if request.method == 'POST':
+        form = profile_form(request.POST, instance=user_profile)
+        if form.is_valid():
+            form.save(commit=False)
+    else:
+        form = profile_form(instance=user_profile)
+
+    return TemplateResponse(request, template_name, {'form': form})    
+    
 
 def activate(request, backend,
              template_name='registration/activate.html',

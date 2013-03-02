@@ -39,11 +39,11 @@
           <a class="brand" href="#">{% trans "Project name" %}</a>
           <div class="nav-collapse collapse">
             {% if user.is_authenticated %}
-              <ul class="nav pull-right">
+              <ul class="nav pull-right logged-in">
                   <li><a href="{% url auth_profile %}">{{ user.get_profile }}</a></li>
                   <li><a href="/accounts/logout">{% trans "Logout" %}</a></li>
               </ul>
-              <p class="navbar-text pull-right logged-as">
+              <p class="navbar-text pull-right">
                 {% trans "Logged in as" %}
               </p>
             {% else %}

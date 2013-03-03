@@ -5,7 +5,7 @@ import sys
 
 ROOT_PATH = os.path.dirname(__file__)
 sys.path.insert(0, os.path.join(ROOT_PATH, 'apps'))
-sys.path.insert(0, os.path.join(ROOT_PATH, 'django-getpaid'))
+sys.path.insert(0, os.path.join(ROOT_PATH, 'vendors'))
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -128,6 +128,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # 'django.contrib.admindocs',
 
+    # http://github.com/cypreess/django-getpaid
     'getpaid',
     'getpaid.backends.dummy',
     'getpaid.backends.dotpay',
@@ -180,7 +181,7 @@ LOGIN_ERROR_URL    = '/login-error/'
 
 SOCIAL_AUTH_SESSION_EXPIRATION = False
 
-ACCOUNT_ACTIVATION_DAYS = 7
+ACCOUNT_ACTIVATION_DAYS = 0
 
 CRISPY_TEMPLATE_PACK = 'bootstrap'
 

@@ -11,7 +11,7 @@ urlpatterns = patterns('',
     url(r'', include('social_auth.urls')),
     url(r'^payments/', include('getpaid.urls')),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^accounts/', include('registration.backends.simple.urls')),
+    url(r'^accounts/', include('registration.backends.default.urls')),
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 )
 

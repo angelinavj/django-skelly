@@ -72,14 +72,23 @@ class DefaultBackend(object):
         """
         username, email, password = kwargs['username'], kwargs['email'], kwargs['password1']
 
-        if Site._meta.installed:
-            site = Site.objects.get_current()
+        if not getattr(settings, 'ACCOUNT_ACTIVATION_DAYS'):
+            user = User.objects.create_user(username, email, password)
+            user_registered.send(sender=self.__class__, user=user, request=request)
+            RegistrationProfile.objects.create_profile(user)
+            # authenticate() always has to be called before login(), and
+            # will return the user we just created.
+            new_user = authenticate(username=username, password=password)
+            login(request, new_user)
         else:
-            site = RequestSite(request)
-        new_user = RegistrationProfile.objects.create_inactive_user(username, email,
-                                                                    password, site)
-        user_registered.send(sender=self.__class__, user=new_user, request=request)
-        
+            if Site._meta.installed:
+                site = Site.objects.get_current()
+            else:
+                site = RequestSite(request)
+            new_user = RegistrationProfile.objects.create_inactive_user(username, email,
+                                                                        password, site)
+            user_registered.send(sender=self.__class__, user=new_user, request=request)
+            
         return new_user
 
     def activate(self, request, activation_key):

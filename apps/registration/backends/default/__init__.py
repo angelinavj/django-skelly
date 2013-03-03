@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib.sites.models import RequestSite
 from django.contrib.sites.models import Site
+from django.contrib.auth.models import User
 
 from registration.signals import user_registered
 from registration.forms import RegistrationRestrictForm

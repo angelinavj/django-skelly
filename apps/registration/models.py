@@ -1,13 +1,11 @@
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
-from django.utils.hashcompat import sha_constructor
 from django.utils.translation import ugettext_lazy as _
 from registration.managers import RegistrationManager
 from registration.helpers import render_email
 
 import datetime
-import random
 
 class RegistrationProfile(models.Model):
     """
@@ -65,6 +63,7 @@ class RegistrationProfile(models.Model):
         
         """
         expiration_date = datetime.timedelta(days=settings.ACCOUNT_ACTIVATION_DAYS)
+        
         return self.activation_key == self.ACTIVATED or \
                (self.user.date_joined + expiration_date <= datetime.datetime.now())
     activation_key_expired.boolean = True

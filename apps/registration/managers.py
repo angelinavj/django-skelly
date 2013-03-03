@@ -1,7 +1,9 @@
+from django.utils.hashcompat import sha_constructor
 from django.contrib.auth.models import User
 from django.db import transaction
 from django.db import models
 
+import random
 import re
 
 SHA1_RE = re.compile('^[a-f0-9]{40}$')

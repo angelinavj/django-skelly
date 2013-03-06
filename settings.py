@@ -192,6 +192,9 @@ GETPAID_BACKENDS_SETTINGS = {
 
     #     },
 }
+
+LOGIN_URL = '/accounts/login'
+
 try:
     from local_settings import *
 except ImportError:
